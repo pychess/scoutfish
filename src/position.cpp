@@ -38,6 +38,7 @@ const char* play_game(const Position& pos, Move move, const char* moves, const c
 
 using std::string;
 
+
 namespace PSQT {
   extern Score psq[PIECE_NB][SQUARE_NB];
 }
@@ -51,6 +52,254 @@ namespace Zobrist {
 }
 
 namespace {
+    // Chess 960 start position numbering: https://chess960.net/start-positions/
+    const  std::string whitePositionTable[960] =
+      {
+          "BBQNNRKR", "BQNBNRKR", "BQNNRBKR", "BQNNRKRB", "QBBNNRKR", "QNBBNRKR", "QNBNRBKR", "QNBNRKRB",
+          "QBNNBRKR", "QNNBBRKR", "QNNRBBKR", "QNNRBKRB", "QBNNRKBR", "QNNBRKBR", "QNNRKBBR", "QNNRKRBB",
+          "BBNQNRKR", "BNQBNRKR", "BNQNRBKR", "BNQNRKRB", "NBBQNRKR", "NQBBNRKR", "NQBNRBKR", "NQBNRKRB",
+          "NBQNBRKR", "NQNBBRKR", "NQNRBBKR", "NQNRBKRB", "NBQNRKBR", "NQNBRKBR", "NQNRKBBR", "NQNRKRBB",
+          "BBNNQRKR", "BNNBQRKR", "BNNQRBKR", "BNNQRKRB", "NBBNQRKR", "NNBBQRKR", "NNBQRBKR", "NNBQRKRB",
+          "NBNQBRKR", "NNQBBRKR", "NNQRBBKR", "NNQRBKRB", "NBNQRKBR", "NNQBRKBR", "NNQRKBBR", "NNQRKRBB",
+          "BBNNRQKR", "BNNBRQKR", "BNNRQBKR", "BNNRQKRB", "NBBNRQKR", "NNBBRQKR", "NNBRQBKR", "NNBRQKRB",
+          "NBNRBQKR", "NNRBBQKR", "NNRQBBKR", "NNRQBKRB", "NBNRQKBR", "NNRBQKBR", "NNRQKBBR", "NNRQKRBB",
+          "BBNNRKQR", "BNNBRKQR", "BNNRKBQR", "BNNRKQRB", "NBBNRKQR", "NNBBRKQR", "NNBRKBQR", "NNBRKQRB",
+          "NBNRBKQR", "NNRBBKQR", "NNRKBBQR", "NNRKBQRB", "NBNRKQBR", "NNRBKQBR", "NNRKQBBR", "NNRKQRBB",
+          "BBNNRKRQ", "BNNBRKRQ", "BNNRKBRQ", "BNNRKRQB", "NBBNRKRQ", "NNBBRKRQ", "NNBRKBRQ", "NNBRKRQB",
+          "NBNRBKRQ", "NNRBBKRQ", "NNRKBBRQ", "NNRKBRQB", "NBNRKRBQ", "NNRBKRBQ", "NNRKRBBQ", "NNRKRQBB",
+          "BBQNRNKR", "BQNBRNKR", "BQNRNBKR", "BQNRNKRB", "QBBNRNKR", "QNBBRNKR", "QNBRNBKR", "QNBRNKRB",
+          "QBNRBNKR", "QNRBBNKR", "QNRNBBKR", "QNRNBKRB", "QBNRNKBR", "QNRBNKBR", "QNRNKBBR", "QNRNKRBB",
+          "BBNQRNKR", "BNQBRNKR", "BNQRNBKR", "BNQRNKRB", "NBBQRNKR", "NQBBRNKR", "NQBRNBKR", "NQBRNKRB",
+          "NBQRBNKR", "NQRBBNKR", "NQRNBBKR", "NQRNBKRB", "NBQRNKBR", "NQRBNKBR", "NQRNKBBR", "NQRNKRBB",
+          "BBNRQNKR", "BNRBQNKR", "BNRQNBKR", "BNRQNKRB", "NBBRQNKR", "NRBBQNKR", "NRBQNBKR", "NRBQNKRB",
+          "NBRQBNKR", "NRQBBNKR", "NRQNBBKR", "NRQNBKRB", "NBRQNKBR", "NRQBNKBR", "NRQNKBBR", "NRQNKRBB",
+          "BBNRNQKR", "BNRBNQKR", "BNRNQBKR", "BNRNQKRB", "NBBRNQKR", "NRBBNQKR", "NRBNQBKR", "NRBNQKRB",
+          "NBRNBQKR", "NRNBBQKR", "NRNQBBKR", "NRNQBKRB", "NBRNQKBR", "NRNBQKBR", "NRNQKBBR", "NRNQKRBB",
+          "BBNRNKQR", "BNRBNKQR", "BNRNKBQR", "BNRNKQRB", "NBBRNKQR", "NRBBNKQR", "NRBNKBQR", "NRBNKQRB",
+          "NBRNBKQR", "NRNBBKQR", "NRNKBBQR", "NRNKBQRB", "NBRNKQBR", "NRNBKQBR", "NRNKQBBR", "NRNKQRBB",
+          "BBNRNKRQ", "BNRBNKRQ", "BNRNKBRQ", "BNRNKRQB", "NBBRNKRQ", "NRBBNKRQ", "NRBNKBRQ", "NRBNKRQB",
+          "NBRNBKRQ", "NRNBBKRQ", "NRNKBBRQ", "NRNKBRQB", "NBRNKRBQ", "NRNBKRBQ", "NRNKRBBQ", "NRNKRQBB",
+          "BBQNRKNR", "BQNBRKNR", "BQNRKBNR", "BQNRKNRB", "QBBNRKNR", "QNBBRKNR", "QNBRKBNR", "QNBRKNRB",
+          "QBNRBKNR", "QNRBBKNR", "QNRKBBNR", "QNRKBNRB", "QBNRKNBR", "QNRBKNBR", "QNRKNBBR", "QNRKNRBB",
+          "BBNQRKNR", "BNQBRKNR", "BNQRKBNR", "BNQRKNRB", "NBBQRKNR", "NQBBRKNR", "NQBRKBNR", "NQBRKNRB",
+          "NBQRBKNR", "NQRBBKNR", "NQRKBBNR", "NQRKBNRB", "NBQRKNBR", "NQRBKNBR", "NQRKNBBR", "NQRKNRBB",
+          "BBNRQKNR", "BNRBQKNR", "BNRQKBNR", "BNRQKNRB", "NBBRQKNR", "NRBBQKNR", "NRBQKBNR", "NRBQKNRB",
+          "NBRQBKNR", "NRQBBKNR", "NRQKBBNR", "NRQKBNRB", "NBRQKNBR", "NRQBKNBR", "NRQKNBBR", "NRQKNRBB",
+          "BBNRKQNR", "BNRBKQNR", "BNRKQBNR", "BNRKQNRB", "NBBRKQNR", "NRBBKQNR", "NRBKQBNR", "NRBKQNRB",
+          "NBRKBQNR", "NRKBBQNR", "NRKQBBNR", "NRKQBNRB", "NBRKQNBR", "NRKBQNBR", "NRKQNBBR", "NRKQNRBB",
+          "BBNRKNQR", "BNRBKNQR", "BNRKNBQR", "BNRKNQRB", "NBBRKNQR", "NRBBKNQR", "NRBKNBQR", "NRBKNQRB",
+          "NBRKBNQR", "NRKBBNQR", "NRKNBBQR", "NRKNBQRB", "NBRKNQBR", "NRKBNQBR", "NRKNQBBR", "NRKNQRBB",
+          "BBNRKNRQ", "BNRBKNRQ", "BNRKNBRQ", "BNRKNRQB", "NBBRKNRQ", "NRBBKNRQ", "NRBKNBRQ", "NRBKNRQB",
+          "NBRKBNRQ", "NRKBBNRQ", "NRKNBBRQ", "NRKNBRQB", "NBRKNRBQ", "NRKBNRBQ", "NRKNRBBQ", "NRKNRQBB",
+          "BBQNRKRN", "BQNBRKRN", "BQNRKBRN", "BQNRKRNB", "QBBNRKRN", "QNBBRKRN", "QNBRKBRN", "QNBRKRNB",
+          "QBNRBKRN", "QNRBBKRN", "QNRKBBRN", "QNRKBRNB", "QBNRKRBN", "QNRBKRBN", "QNRKRBBN", "QNRKRNBB",
+          "BBNQRKRN", "BNQBRKRN", "BNQRKBRN", "BNQRKRNB", "NBBQRKRN", "NQBBRKRN", "NQBRKBRN", "NQBRKRNB",
+          "NBQRBKRN", "NQRBBKRN", "NQRKBBRN", "NQRKBRNB", "NBQRKRBN", "NQRBKRBN", "NQRKRBBN", "NQRKRNBB",
+          "BBNRQKRN", "BNRBQKRN", "BNRQKBRN", "BNRQKRNB", "NBBRQKRN", "NRBBQKRN", "NRBQKBRN", "NRBQKRNB",
+          "NBRQBKRN", "NRQBBKRN", "NRQKBBRN", "NRQKBRNB", "NBRQKRBN", "NRQBKRBN", "NRQKRBBN", "NRQKRNBB",
+          "BBNRKQRN", "BNRBKQRN", "BNRKQBRN", "BNRKQRNB", "NBBRKQRN", "NRBBKQRN", "NRBKQBRN", "NRBKQRNB",
+          "NBRKBQRN", "NRKBBQRN", "NRKQBBRN", "NRKQBRNB", "NBRKQRBN", "NRKBQRBN", "NRKQRBBN", "NRKQRNBB",
+          "BBNRKRQN", "BNRBKRQN", "BNRKRBQN", "BNRKRQNB", "NBBRKRQN", "NRBBKRQN", "NRBKRBQN", "NRBKRQNB",
+          "NBRKBRQN", "NRKBBRQN", "NRKRBBQN", "NRKRBQNB", "NBRKRQBN", "NRKBRQBN", "NRKRQBBN", "NRKRQNBB",
+          "BBNRKRNQ", "BNRBKRNQ", "BNRKRBNQ", "BNRKRNQB", "NBBRKRNQ", "NRBBKRNQ", "NRBKRBNQ", "NRBKRNQB",
+          "NBRKBRNQ", "NRKBBRNQ", "NRKRBBNQ", "NRKRBNQB", "NBRKRNBQ", "NRKBRNBQ", "NRKRNBBQ", "NRKRNQBB",
+          "BBQRNNKR", "BQRBNNKR", "BQRNNBKR", "BQRNNKRB", "QBBRNNKR", "QRBBNNKR", "QRBNNBKR", "QRBNNKRB",
+          "QBRNBNKR", "QRNBBNKR", "QRNNBBKR", "QRNNBKRB", "QBRNNKBR", "QRNBNKBR", "QRNNKBBR", "QRNNKRBB",
+          "BBRQNNKR", "BRQBNNKR", "BRQNNBKR", "BRQNNKRB", "RBBQNNKR", "RQBBNNKR", "RQBNNBKR", "RQBNNKRB",
+          "RBQNBNKR", "RQNBBNKR", "RQNNBBKR", "RQNNBKRB", "RBQNNKBR", "RQNBNKBR", "RQNNKBBR", "RQNNKRBB",
+          "BBRNQNKR", "BRNBQNKR", "BRNQNBKR", "BRNQNKRB", "RBBNQNKR", "RNBBQNKR", "RNBQNBKR", "RNBQNKRB",
+          "RBNQBNKR", "RNQBBNKR", "RNQNBBKR", "RNQNBKRB", "RBNQNKBR", "RNQBNKBR", "RNQNKBBR", "RNQNKRBB",
+          "BBRNNQKR", "BRNBNQKR", "BRNNQBKR", "BRNNQKRB", "RBBNNQKR", "RNBBNQKR", "RNBNQBKR", "RNBNQKRB",
+          "RBNNBQKR", "RNNBBQKR", "RNNQBBKR", "RNNQBKRB", "RBNNQKBR", "RNNBQKBR", "RNNQKBBR", "RNNQKRBB",
+          "BBRNNKQR", "BRNBNKQR", "BRNNKBQR", "BRNNKQRB", "RBBNNKQR", "RNBBNKQR", "RNBNKBQR", "RNBNKQRB",
+          "RBNNBKQR", "RNNBBKQR", "RNNKBBQR", "RNNKBQRB", "RBNNKQBR", "RNNBKQBR", "RNNKQBBR", "RNNKQRBB",
+          "BBRNNKRQ", "BRNBNKRQ", "BRNNKBRQ", "BRNNKRQB", "RBBNNKRQ", "RNBBNKRQ", "RNBNKBRQ", "RNBNKRQB",
+          "RBNNBKRQ", "RNNBBKRQ", "RNNKBBRQ", "RNNKBRQB", "RBNNKRBQ", "RNNBKRBQ", "RNNKRBBQ", "RNNKRQBB",
+          "BBQRNKNR", "BQRBNKNR", "BQRNKBNR", "BQRNKNRB", "QBBRNKNR", "QRBBNKNR", "QRBNKBNR", "QRBNKNRB",
+          "QBRNBKNR", "QRNBBKNR", "QRNKBBNR", "QRNKBNRB", "QBRNKNBR", "QRNBKNBR", "QRNKNBBR", "QRNKNRBB",
+          "BBRQNKNR", "BRQBNKNR", "BRQNKBNR", "BRQNKNRB", "RBBQNKNR", "RQBBNKNR", "RQBNKBNR", "RQBNKNRB",
+          "RBQNBKNR", "RQNBBKNR", "RQNKBBNR", "RQNKBNRB", "RBQNKNBR", "RQNBKNBR", "RQNKNBBR", "RQNKNRBB",
+          "BBRNQKNR", "BRNBQKNR", "BRNQKBNR", "BRNQKNRB", "RBBNQKNR", "RNBBQKNR", "RNBQKBNR", "RNBQKNRB",
+          "RBNQBKNR", "RNQBBKNR", "RNQKBBNR", "RNQKBNRB", "RBNQKNBR", "RNQBKNBR", "RNQKNBBR", "RNQKNRBB",
+          "BBRNKQNR", "BRNBKQNR", "BRNKQBNR", "BRNKQNRB", "RBBNKQNR", "RNBBKQNR", "RNBKQBNR", "RNBKQNRB",
+          "RBNKBQNR", "RNKBBQNR", "RNKQBBNR", "RNKQBNRB", "RBNKQNBR", "RNKBQNBR", "RNKQNBBR", "RNKQNRBB",
+          "BBRNKNQR", "BRNBKNQR", "BRNKNBQR", "BRNKNQRB", "RBBNKNQR", "RNBBKNQR", "RNBKNBQR", "RNBKNQRB",
+          "RBNKBNQR", "RNKBBNQR", "RNKNBBQR", "RNKNBQRB", "RBNKNQBR", "RNKBNQBR", "RNKNQBBR", "RNKNQRBB",
+          "BBRNKNRQ", "BRNBKNRQ", "BRNKNBRQ", "BRNKNRQB", "RBBNKNRQ", "RNBBKNRQ", "RNBKNBRQ", "RNBKNRQB",
+          "RBNKBNRQ", "RNKBBNRQ", "RNKNBBRQ", "RNKNBRQB", "RBNKNRBQ", "RNKBNRBQ", "RNKNRBBQ", "RNKNRQBB",
+          "BBQRNKRN", "BQRBNKRN", "BQRNKBRN", "BQRNKRNB", "QBBRNKRN", "QRBBNKRN", "QRBNKBRN", "QRBNKRNB",
+          "QBRNBKRN", "QRNBBKRN", "QRNKBBRN", "QRNKBRNB", "QBRNKRBN", "QRNBKRBN", "QRNKRBBN", "QRNKRNBB",
+          "BBRQNKRN", "BRQBNKRN", "BRQNKBRN", "BRQNKRNB", "RBBQNKRN", "RQBBNKRN", "RQBNKBRN", "RQBNKRNB",
+          "RBQNBKRN", "RQNBBKRN", "RQNKBBRN", "RQNKBRNB", "RBQNKRBN", "RQNBKRBN", "RQNKRBBN", "RQNKRNBB",
+          "BBRNQKRN", "BRNBQKRN", "BRNQKBRN", "BRNQKRNB", "RBBNQKRN", "RNBBQKRN", "RNBQKBRN", "RNBQKRNB",
+          "RBNQBKRN", "RNQBBKRN", "RNQKBBRN", "RNQKBRNB", "RBNQKRBN", "RNQBKRBN", "RNQKRBBN", "RNQKRNBB",
+          "BBRNKQRN", "BRNBKQRN", "BRNKQBRN", "BRNKQRNB", "RBBNKQRN", "RNBBKQRN", "RNBKQBRN", "RNBKQRNB",
+          "RBNKBQRN", "RNKBBQRN", "RNKQBBRN", "RNKQBRNB", "RBNKQRBN", "RNKBQRBN", "RNKQRBBN", "RNKQRNBB",
+          "BBRNKRQN", "BRNBKRQN", "BRNKRBQN", "BRNKRQNB", "RBBNKRQN", "RNBBKRQN", "RNBKRBQN", "RNBKRQNB",
+          "RBNKBRQN", "RNKBBRQN", "RNKRBBQN", "RNKRBQNB", "RBNKRQBN", "RNKBRQBN", "RNKRQBBN", "RNKRQNBB",
+          "BBRNKRNQ", "BRNBKRNQ", "BRNKRBNQ", "BRNKRNQB", "RBBNKRNQ", "RNBBKRNQ", "RNBKRBNQ", "RNBKRNQB",
+          "RBNKBRNQ", "RNKBBRNQ", "RNKRBBNQ", "RNKRBNQB", "RBNKRNBQ", "RNKBRNBQ", "RNKRNBBQ", "RNKRNQBB",
+          "BBQRKNNR", "BQRBKNNR", "BQRKNBNR", "BQRKNNRB", "QBBRKNNR", "QRBBKNNR", "QRBKNBNR", "QRBKNNRB",
+          "QBRKBNNR", "QRKBBNNR", "QRKNBBNR", "QRKNBNRB", "QBRKNNBR", "QRKBNNBR", "QRKNNBBR", "QRKNNRBB",
+          "BBRQKNNR", "BRQBKNNR", "BRQKNBNR", "BRQKNNRB", "RBBQKNNR", "RQBBKNNR", "RQBKNBNR", "RQBKNNRB",
+          "RBQKBNNR", "RQKBBNNR", "RQKNBBNR", "RQKNBNRB", "RBQKNNBR", "RQKBNNBR", "RQKNNBBR", "RQKNNRBB",
+          "BBRKQNNR", "BRKBQNNR", "BRKQNBNR", "BRKQNNRB", "RBBKQNNR", "RKBBQNNR", "RKBQNBNR", "RKBQNNRB",
+          "RBKQBNNR", "RKQBBNNR", "RKQNBBNR", "RKQNBNRB", "RBKQNNBR", "RKQBNNBR", "RKQNNBBR", "RKQNNRBB",
+          "BBRKNQNR", "BRKBNQNR", "BRKNQBNR", "BRKNQNRB", "RBBKNQNR", "RKBBNQNR", "RKBNQBNR", "RKBNQNRB",
+          "RBKNBQNR", "RKNBBQNR", "RKNQBBNR", "RKNQBNRB", "RBKNQNBR", "RKNBQNBR", "RKNQNBBR", "RKNQNRBB",
+          "BBRKNNQR", "BRKBNNQR", "BRKNNBQR", "BRKNNQRB", "RBBKNNQR", "RKBBNNQR", "RKBNNBQR", "RKBNNQRB",
+          "RBKNBNQR", "RKNBBNQR", "RKNNBBQR", "RKNNBQRB", "RBKNNQBR", "RKNBNQBR", "RKNNQBBR", "RKNNQRBB",
+          "BBRKNNRQ", "BRKBNNRQ", "BRKNNBRQ", "BRKNNRQB", "RBBKNNRQ", "RKBBNNRQ", "RKBNNBRQ", "RKBNNRQB",
+          "RBKNBNRQ", "RKNBBNRQ", "RKNNBBRQ", "RKNNBRQB", "RBKNNRBQ", "RKNBNRBQ", "RKNNRBBQ", "RKNNRQBB",
+          "BBQRKNRN", "BQRBKNRN", "BQRKNBRN", "BQRKNRNB", "QBBRKNRN", "QRBBKNRN", "QRBKNBRN", "QRBKNRNB",
+          "QBRKBNRN", "QRKBBNRN", "QRKNBBRN", "QRKNBRNB", "QBRKNRBN", "QRKBNRBN", "QRKNRBBN", "QRKNRNBB",
+          "BBRQKNRN", "BRQBKNRN", "BRQKNBRN", "BRQKNRNB", "RBBQKNRN", "RQBBKNRN", "RQBKNBRN", "RQBKNRNB",
+          "RBQKBNRN", "RQKBBNRN", "RQKNBBRN", "RQKNBRNB", "RBQKNRBN", "RQKBNRBN", "RQKNRBBN", "RQKNRNBB",
+          "BBRKQNRN", "BRKBQNRN", "BRKQNBRN", "BRKQNRNB", "RBBKQNRN", "RKBBQNRN", "RKBQNBRN", "RKBQNRNB",
+          "RBKQBNRN", "RKQBBNRN", "RKQNBBRN", "RKQNBRNB", "RBKQNRBN", "RKQBNRBN", "RKQNRBBN", "RKQNRNBB",
+          "BBRKNQRN", "BRKBNQRN", "BRKNQBRN", "BRKNQRNB", "RBBKNQRN", "RKBBNQRN", "RKBNQBRN", "RKBNQRNB",
+          "RBKNBQRN", "RKNBBQRN", "RKNQBBRN", "RKNQBRNB", "RBKNQRBN", "RKNBQRBN", "RKNQRBBN", "RKNQRNBB",
+          "BBRKNRQN", "BRKBNRQN", "BRKNRBQN", "BRKNRQNB", "RBBKNRQN", "RKBBNRQN", "RKBNRBQN", "RKBNRQNB",
+          "RBKNBRQN", "RKNBBRQN", "RKNRBBQN", "RKNRBQNB", "RBKNRQBN", "RKNBRQBN", "RKNRQBBN", "RKNRQNBB",
+          "BBRKNRNQ", "BRKBNRNQ", "BRKNRBNQ", "BRKNRNQB", "RBBKNRNQ", "RKBBNRNQ", "RKBNRBNQ", "RKBNRNQB",
+          "RBKNBRNQ", "RKNBBRNQ", "RKNRBBNQ", "RKNRBNQB", "RBKNRNBQ", "RKNBRNBQ", "RKNRNBBQ", "RKNRNQBB",
+          "BBQRKRNN", "BQRBKRNN", "BQRKRBNN", "BQRKRNNB", "QBBRKRNN", "QRBBKRNN", "QRBKRBNN", "QRBKRNNB",
+          "QBRKBRNN", "QRKBBRNN", "QRKRBBNN", "QRKRBNNB", "QBRKRNBN", "QRKBRNBN", "QRKRNBBN", "QRKRNNBB",
+          "BBRQKRNN", "BRQBKRNN", "BRQKRBNN", "BRQKRNNB", "RBBQKRNN", "RQBBKRNN", "RQBKRBNN", "RQBKRNNB",
+          "RBQKBRNN", "RQKBBRNN", "RQKRBBNN", "RQKRBNNB", "RBQKRNBN", "RQKBRNBN", "RQKRNBBN", "RQKRNNBB",
+          "BBRKQRNN", "BRKBQRNN", "BRKQRBNN", "BRKQRNNB", "RBBKQRNN", "RKBBQRNN", "RKBQRBNN", "RKBQRNNB",
+          "RBKQBRNN", "RKQBBRNN", "RKQRBBNN", "RKQRBNNB", "RBKQRNBN", "RKQBRNBN", "RKQRNBBN", "RKQRNNBB",
+          "BBRKRQNN", "BRKBRQNN", "BRKRQBNN", "BRKRQNNB", "RBBKRQNN", "RKBBRQNN", "RKBRQBNN", "RKBRQNNB",
+          "RBKRBQNN", "RKRBBQNN", "RKRQBBNN", "RKRQBNNB", "RBKRQNBN", "RKRBQNBN", "RKRQNBBN", "RKRQNNBB",
+          "BBRKRNQN", "BRKBRNQN", "BRKRNBQN", "BRKRNQNB", "RBBKRNQN", "RKBBRNQN", "RKBRNBQN", "RKBRNQNB",
+          "RBKRBNQN", "RKRBBNQN", "RKRNBBQN", "RKRNBQNB", "RBKRNQBN", "RKRBNQBN", "RKRNQBBN", "RKRNQNBB",
+          "BBRKRNNQ", "BRKBRNNQ", "BRKRNBNQ", "BRKRNNQB", "RBBKRNNQ", "RKBBRNNQ", "RKBRNBNQ", "RKBRNNQB",
+          "RBKRBNNQ", "RKRBBNNQ", "RKRNBBNQ", "RKRNBNQB", "RBKRNNBQ", "RKRBNNBQ", "RKRNNBBQ", "RKRNNQBB"
+      };
+
+    const  std::string blackPositionTable[960] =
+      {
+          "bbqnnrkr", "bqnbnrkr", "bqnnrbkr", "bqnnrkrb", "qbbnnrkr", "qnbbnrkr", "qnbnrbkr", "qnbnrkrb",
+          "qbnnbrkr", "qnnbbrkr", "qnnrbbkr", "qnnrbkrb", "qbnnrkbr", "qnnbrkbr", "qnnrkbbr", "qnnrkrbb",
+          "bbnqnrkr", "bnqbnrkr", "bnqnrbkr", "bnqnrkrb", "nbbqnrkr", "nqbbnrkr", "nqbnrbkr", "nqbnrkrb",
+          "nbqnbrkr", "nqnbbrkr", "nqnrbbkr", "nqnrbkrb", "nbqnrkbr", "nqnbrkbr", "nqnrkbbr", "nqnrkrbb",
+          "bbnnqrkr", "bnnbqrkr", "bnnqrbkr", "bnnqrkrb", "nbbnqrkr", "nnbbqrkr", "nnbqrbkr", "nnbqrkrb",
+          "nbnqbrkr", "nnqbbrkr", "nnqrbbkr", "nnqrbkrb", "nbnqrkbr", "nnqbrkbr", "nnqrkbbr", "nnqrkrbb",
+          "bbnnrqkr", "bnnbrqkr", "bnnrqbkr", "bnnrqkrb", "nbbnrqkr", "nnbbrqkr", "nnbrqbkr", "nnbrqkrb",
+          "nbnrbqkr", "nnrbbqkr", "nnrqbbkr", "nnrqbkrb", "nbnrqkbr", "nnrbqkbr", "nnrqkbbr", "nnrqkrbb",
+          "bbnnrkqr", "bnnbrkqr", "bnnrkbqr", "bnnrkqrb", "nbbnrkqr", "nnbbrkqr", "nnbrkbqr", "nnbrkqrb",
+          "nbnrbkqr", "nnrbbkqr", "nnrkbbqr", "nnrkbqrb", "nbnrkqbr", "nnrbkqbr", "nnrkqbbr", "nnrkqrbb",
+          "bbnnrkrq", "bnnbrkrq", "bnnrkbrq", "bnnrkrqb", "nbbnrkrq", "nnbbrkrq", "nnbrkbrq", "nnbrkrqb",
+          "nbnrbkrq", "nnrbbkrq", "nnrkbbrq", "nnrkbrqb", "nbnrkrbq", "nnrbkrbq", "nnrkrbbq", "nnrkrqbb",
+          "bbqnrnkr", "bqnbrnkr", "bqnrnbkr", "bqnrnkrb", "qbbnrnkr", "qnbbrnkr", "qnbrnbkr", "qnbrnkrb",
+          "qbnrbnkr", "qnrbbnkr", "qnrnbbkr", "qnrnbkrb", "qbnrnkbr", "qnrbnkbr", "qnrnkbbr", "qnrnkrbb",
+          "bbnqrnkr", "bnqbrnkr", "bnqrnbkr", "bnqrnkrb", "nbbqrnkr", "nqbbrnkr", "nqbrnbkr", "nqbrnkrb",
+          "nbqrbnkr", "nqrbbnkr", "nqrnbbkr", "nqrnbkrb", "nbqrnkbr", "nqrbnkbr", "nqrnkbbr", "nqrnkrbb",
+          "bbnrqnkr", "bnrbqnkr", "bnrqnbkr", "bnrqnkrb", "nbbrqnkr", "nrbbqnkr", "nrbqnbkr", "nrbqnkrb",
+          "nbrqbnkr", "nrqbbnkr", "nrqnbbkr", "nrqnbkrb", "nbrqnkbr", "nrqbnkbr", "nrqnkbbr", "nrqnkrbb",
+          "bbnrnqkr", "bnrbnqkr", "bnrnqbkr", "bnrnqkrb", "nbbrnqkr", "nrbbnqkr", "nrbnqbkr", "nrbnqkrb",
+          "nbrnbqkr", "nrnbbqkr", "nrnqbbkr", "nrnqbkrb", "nbrnqkbr", "nrnbqkbr", "nrnqkbbr", "nrnqkrbb",
+          "bbnrnkqr", "bnrbnkqr", "bnrnkbqr", "bnrnkqrb", "nbbrnkqr", "nrbbnkqr", "nrbnkbqr", "nrbnkqrb",
+          "nbrnbkqr", "nrnbbkqr", "nrnkbbqr", "nrnkbqrb", "nbrnkqbr", "nrnbkqbr", "nrnkqbbr", "nrnkqrbb",
+          "bbnrnkrq", "bnrbnkrq", "bnrnkbrq", "bnrnkrqb", "nbbrnkrq", "nrbbnkrq", "nrbnkbrq", "nrbnkrqb",
+          "nbrnbkrq", "nrnbbkrq", "nrnkbbrq", "nrnkbrqb", "nbrnkrbq", "nrnbkrbq", "nrnkrbbq", "nrnkrqbb",
+          "bbqnrknr", "bqnbrknr", "bqnrkbnr", "bqnrknrb", "qbbnrknr", "qnbbrknr", "qnbrkbnr", "qnbrknrb",
+          "qbnrbknr", "qnrbbknr", "qnrkbbnr", "qnrkbnrb", "qbnrknbr", "qnrbknbr", "qnrknbbr", "qnrknrbb",
+          "bbnqrknr", "bnqbrknr", "bnqrkbnr", "bnqrknrb", "nbbqrknr", "nqbbrknr", "nqbrkbnr", "nqbrknrb",
+          "nbqrbknr", "nqrbbknr", "nqrkbbnr", "nqrkbnrb", "nbqrknbr", "nqrbknbr", "nqrknbbr", "nqrknrbb",
+          "bbnrqknr", "bnrbqknr", "bnrqkbnr", "bnrqknrb", "nbbrqknr", "nrbbqknr", "nrbqkbnr", "nrbqknrb",
+          "nbrqbknr", "nrqbbknr", "nrqkbbnr", "nrqkbnrb", "nbrqknbr", "nrqbknbr", "nrqknbbr", "nrqknrbb",
+          "bbnrkqnr", "bnrbkqnr", "bnrkqbnr", "bnrkqnrb", "nbbrkqnr", "nrbbkqnr", "nrbkqbnr", "nrbkqnrb",
+          "nbrkbqnr", "nrkbbqnr", "nrkqbbnr", "nrkqbnrb", "nbrkqnbr", "nrkbqnbr", "nrkqnbbr", "nrkqnrbb",
+          "bbnrknqr", "bnrbknqr", "bnrknbqr", "bnrknqrb", "nbbrknqr", "nrbbknqr", "nrbknbqr", "nrbknqrb",
+          "nbrkbnqr", "nrkbbnqr", "nrknbbqr", "nrknbqrb", "nbrknqbr", "nrkbnqbr", "nrknqbbr", "nrknqrbb",
+          "bbnrknrq", "bnrbknrq", "bnrknbrq", "bnrknrqb", "nbbrknrq", "nrbbknrq", "nrbknbrq", "nrbknrqb",
+          "nbrkbnrq", "nrkbbnrq", "nrknbbrq", "nrknbrqb", "nbrknrbq", "nrkbnrbq", "nrknrbbq", "nrknrqbb",
+          "bbqnrkrn", "bqnbrkrn", "bqnrkbrn", "bqnrkrnb", "qbbnrkrn", "qnbbrkrn", "qnbrkbrn", "qnbrkrnb",
+          "qbnrbkrn", "qnrbbkrn", "qnrkbbrn", "qnrkbrnb", "qbnrkrbn", "qnrbkrbn", "qnrkrbbn", "qnrkrnbb",
+          "bbnqrkrn", "bnqbrkrn", "bnqrkbrn", "bnqrkrnb", "nbbqrkrn", "nqbbrkrn", "nqbrkbrn", "nqbrkrnb",
+          "nbqrbkrn", "nqrbbkrn", "nqrkbbrn", "nqrkbrnb", "nbqrkrbn", "nqrbkrbn", "nqrkrbbn", "nqrkrnbb",
+          "bbnrqkrn", "bnrbqkrn", "bnrqkbrn", "bnrqkrnb", "nbbrqkrn", "nrbbqkrn", "nrbqkbrn", "nrbqkrnb",
+          "nbrqbkrn", "nrqbbkrn", "nrqkbbrn", "nrqkbrnb", "nbrqkrbn", "nrqbkrbn", "nrqkrbbn", "nrqkrnbb",
+          "bbnrkqrn", "bnrbkqrn", "bnrkqbrn", "bnrkqrnb", "nbbrkqrn", "nrbbkqrn", "nrbkqbrn", "nrbkqrnb",
+          "nbrkbqrn", "nrkbbqrn", "nrkqbbrn", "nrkqbrnb", "nbrkqrbn", "nrkbqrbn", "nrkqrbbn", "nrkqrnbb",
+          "bbnrkrqn", "bnrbkrqn", "bnrkrbqn", "bnrkrqnb", "nbbrkrqn", "nrbbkrqn", "nrbkrbqn", "nrbkrqnb",
+          "nbrkbrqn", "nrkbbrqn", "nrkrbbqn", "nrkrbqnb", "nbrkrqbn", "nrkbrqbn", "nrkrqbbn", "nrkrqnbb",
+          "bbnrkrnq", "bnrbkrnq", "bnrkrbnq", "bnrkrnqb", "nbbrkrnq", "nrbbkrnq", "nrbkrbnq", "nrbkrnqb",
+          "nbrkbrnq", "nrkbbrnq", "nrkrbbnq", "nrkrbnqb", "nbrkrnbq", "nrkbrnbq", "nrkrnbbq", "nrkrnqbb",
+          "bbqrnnkr", "bqrbnnkr", "bqrnnbkr", "bqrnnkrb", "qbbrnnkr", "qrbbnnkr", "qrbnnbkr", "qrbnnkrb",
+          "qbrnbnkr", "qrnbbnkr", "qrnnbbkr", "qrnnbkrb", "qbrnnkbr", "qrnbnkbr", "qrnnkbbr", "qrnnkrbb",
+          "bbrqnnkr", "brqbnnkr", "brqnnbkr", "brqnnkrb", "rbbqnnkr", "rqbbnnkr", "rqbnnbkr", "rqbnnkrb",
+          "rbqnbnkr", "rqnbbnkr", "rqnnbbkr", "rqnnbkrb", "rbqnnkbr", "rqnbnkbr", "rqnnkbbr", "rqnnkrbb",
+          "bbrnqnkr", "brnbqnkr", "brnqnbkr", "brnqnkrb", "rbbnqnkr", "rnbbqnkr", "rnbqnbkr", "rnbqnkrb",
+          "rbnqbnkr", "rnqbbnkr", "rnqnbbkr", "rnqnbkrb", "rbnqnkbr", "rnqbnkbr", "rnqnkbbr", "rnqnkrbb",
+          "bbrnnqkr", "brnbnqkr", "brnnqbkr", "brnnqkrb", "rbbnnqkr", "rnbbnqkr", "rnbnqbkr", "rnbnqkrb",
+          "rbnnbqkr", "rnnbbqkr", "rnnqbbkr", "rnnqbkrb", "rbnnqkbr", "rnnbqkbr", "rnnqkbbr", "rnnqkrbb",
+          "bbrnnkqr", "brnbnkqr", "brnnkbqr", "brnnkqrb", "rbbnnkqr", "rnbbnkqr", "rnbnkbqr", "rnbnkqrb",
+          "rbnnbkqr", "rnnbbkqr", "rnnkbbqr", "rnnkbqrb", "rbnnkqbr", "rnnbkqbr", "rnnkqbbr", "rnnkqrbb",
+          "bbrnnkrq", "brnbnkrq", "brnnkbrq", "brnnkrqb", "rbbnnkrq", "rnbbnkrq", "rnbnkbrq", "rnbnkrqb",
+          "rbnnbkrq", "rnnbbkrq", "rnnkbbrq", "rnnkbrqb", "rbnnkrbq", "rnnbkrbq", "rnnkrbbq", "rnnkrqbb",
+          "bbqrnknr", "bqrbnknr", "bqrnkbnr", "bqrnknrb", "qbbrnknr", "qrbbnknr", "qrbnkbnr", "qrbnknrb",
+          "qbrnbknr", "qrnbbknr", "qrnkbbnr", "qrnkbnrb", "qbrnknbr", "qrnbknbr", "qrnknbbr", "qrnknrbb",
+          "bbrqnknr", "brqbnknr", "brqnkbnr", "brqnknrb", "rbbqnknr", "rqbbnknr", "rqbnkbnr", "rqbnknrb",
+          "rbqnbknr", "rqnbbknr", "rqnkbbnr", "rqnkbnrb", "rbqnknbr", "rqnbknbr", "rqnknbbr", "rqnknrbb",
+          "bbrnqknr", "brnbqknr", "brnqkbnr", "brnqknrb", "rbbnqknr", "rnbbqknr", "rnbqkbnr", "rnbqknrb",
+          "rbnqbknr", "rnqbbknr", "rnqkbbnr", "rnqkbnrb", "rbnqknbr", "rnqbknbr", "rnqknbbr", "rnqknrbb",
+          "bbrnkqnr", "brnbkqnr", "brnkqbnr", "brnkqnrb", "rbbnkqnr", "rnbbkqnr", "rnbkqbnr", "rnbkqnrb",
+          "rbnkbqnr", "rnkbbqnr", "rnkqbbnr", "rnkqbnrb", "rbnkqnbr", "rnkbqnbr", "rnkqnbbr", "rnkqnrbb",
+          "bbrnknqr", "brnbknqr", "brnknbqr", "brnknqrb", "rbbnknqr", "rnbbknqr", "rnbknbqr", "rnbknqrb",
+          "rbnkbnqr", "rnkbbnqr", "rnknbbqr", "rnknbqrb", "rbnknqbr", "rnkbnqbr", "rnknqbbr", "rnknqrbb",
+          "bbrnknrq", "brnbknrq", "brnknbrq", "brnknrqb", "rbbnknrq", "rnbbknrq", "rnbknbrq", "rnbknrqb",
+          "rbnkbnrq", "rnkbbnrq", "rnknbbrq", "rnknbrqb", "rbnknrbq", "rnkbnrbq", "rnknrbbq", "rnknrqbb",
+          "bbqrnkrn", "bqrbnkrn", "bqrnkbrn", "bqrnkrnb", "qbbrnkrn", "qrbbnkrn", "qrbnkbrn", "qrbnkrnb",
+          "qbrnbkrn", "qrnbbkrn", "qrnkbbrn", "qrnkbrnb", "qbrnkrbn", "qrnbkrbn", "qrnkrbbn", "qrnkrnbb",
+          "bbrqnkrn", "brqbnkrn", "brqnkbrn", "brqnkrnb", "rbbqnkrn", "rqbbnkrn", "rqbnkbrn", "rqbnkrnb",
+          "rbqnbkrn", "rqnbbkrn", "rqnkbbrn", "rqnkbrnb", "rbqnkrbn", "rqnbkrbn", "rqnkrbbn", "rqnkrnbb",
+          "bbrnqkrn", "brnbqkrn", "brnqkbrn", "brnqkrnb", "rbbnqkrn", "rnbbqkrn", "rnbqkbrn", "rnbqkrnb",
+          "rbnqbkrn", "rnqbbkrn", "rnqkbbrn", "rnqkbrnb", "rbnqkrbn", "rnqbkrbn", "rnqkrbbn", "rnqkrnbb",
+          "bbrnkqrn", "brnbkqrn", "brnkqbrn", "brnkqrnb", "rbbnkqrn", "rnbbkqrn", "rnbkqbrn", "rnbkqrnb",
+          "rbnkbqrn", "rnkbbqrn", "rnkqbbrn", "rnkqbrnb", "rbnkqrbn", "rnkbqrbn", "rnkqrbbn", "rnkqrnbb",
+          "bbrnkrqn", "brnbkrqn", "brnkrbqn", "brnkrqnb", "rbbnkrqn", "rnbbkrqn", "rnbkrbqn", "rnbkrqnb",
+          "rbnkbrqn", "rnkbbrqn", "rnkrbbqn", "rnkrbqnb", "rbnkrqbn", "rnkbrqbn", "rnkrqbbn", "rnkrqnbb",
+          "bbrnkrnq", "brnbkrnq", "brnkrbnq", "brnkrnqb", "rbbnkrnq", "rnbbkrnq", "rnbkrbnq", "rnbkrnqb",
+          "rbnkbrnq", "rnkbbrnq", "rnkrbbnq", "rnkrbnqb", "rbnkrnbq", "rnkbrnbq", "rnkrnbbq", "rnkrnqbb",
+          "bbqrknnr", "bqrbknnr", "bqrknbnr", "bqrknnrb", "qbbrknnr", "qrbbknnr", "qrbknbnr", "qrbknnrb",
+          "qbrkbnnr", "qrkbbnnr", "qrknbbnr", "qrknbnrb", "qbrknnbr", "qrkbnnbr", "qrknnbbr", "qrknnrbb",
+          "bbrqknnr", "brqbknnr", "brqknbnr", "brqknnrb", "rbbqknnr", "rqbbknnr", "rqbknbnr", "rqbknnrb",
+          "rbqkbnnr", "rqkbbnnr", "rqknbbnr", "rqknbnrb", "rbqknnbr", "rqkbnnbr", "rqknnbbr", "rqknnrbb",
+          "bbrkqnnr", "brkbqnnr", "brkqnbnr", "brkqnnrb", "rbbkqnnr", "rkbbqnnr", "rkbqnbnr", "rkbqnnrb",
+          "rbkqbnnr", "rkqbbnnr", "rkqnbbnr", "rkqnbnrb", "rbkqnnbr", "rkqbnnbr", "rkqnnbbr", "rkqnnrbb",
+          "bbrknqnr", "brkbnqnr", "brknqbnr", "brknqnrb", "rbbknqnr", "rkbbnqnr", "rkbnqbnr", "rkbnqnrb",
+          "rbknbqnr", "rknbbqnr", "rknqbbnr", "rknqbnrb", "rbknqnbr", "rknbqnbr", "rknqnbbr", "rknqnrbb",
+          "bbrknnqr", "brkbnnqr", "brknnbqr", "brknnqrb", "rbbknnqr", "rkbbnnqr", "rkbnnbqr", "rkbnnqrb",
+          "rbknbnqr", "rknbbnqr", "rknnbbqr", "rknnbqrb", "rbknnqbr", "rknbnqbr", "rknnqbbr", "rknnqrbb",
+          "bbrknnrq", "brkbnnrq", "brknnbrq", "brknnrqb", "rbbknnrq", "rkbbnnrq", "rkbnnbrq", "rkbnnrqb",
+          "rbknbnrq", "rknbbnrq", "rknnbbrq", "rknnbrqb", "rbknnrbq", "rknbnrbq", "rknnrbbq", "rknnrqbb",
+          "bbqrknrn", "bqrbknrn", "bqrknbrn", "bqrknrnb", "qbbrknrn", "qrbbknrn", "qrbknbrn", "qrbknrnb",
+          "qbrkbnrn", "qrkbbnrn", "qrknbbrn", "qrknbrnb", "qbrknrbn", "qrkbnrbn", "qrknrbbn", "qrknrnbb",
+          "bbrqknrn", "brqbknrn", "brqknbrn", "brqknrnb", "rbbqknrn", "rqbbknrn", "rqbknbrn", "rqbknrnb",
+          "rbqkbnrn", "rqkbbnrn", "rqknbbrn", "rqknbrnb", "rbqknrbn", "rqkbnrbn", "rqknrbbn", "rqknrnbb",
+          "bbrkqnrn", "brkbqnrn", "brkqnbrn", "brkqnrnb", "rbbkqnrn", "rkbbqnrn", "rkbqnbrn", "rkbqnrnb",
+          "rbkqbnrn", "rkqbbnrn", "rkqnbbrn", "rkqnbrnb", "rbkqnrbn", "rkqbnrbn", "rkqnrbbn", "rkqnrnbb",
+          "bbrknqrn", "brkbnqrn", "brknqbrn", "brknqrnb", "rbbknqrn", "rkbbnqrn", "rkbnqbrn", "rkbnqrnb",
+          "rbknbqrn", "rknbbqrn", "rknqbbrn", "rknqbrnb", "rbknqrbn", "rknbqrbn", "rknqrbbn", "rknqrnbb",
+          "bbrknrqn", "brkbnrqn", "brknrbqn", "brknrqnb", "rbbknrqn", "rkbbnrqn", "rkbnrbqn", "rkbnrqnb",
+          "rbknbrqn", "rknbbrqn", "rknrbbqn", "rknrbqnb", "rbknrqbn", "rknbrqbn", "rknrqbbn", "rknrqnbb",
+          "bbrknrnq", "brkbnrnq", "brknrbnq", "brknrnqb", "rbbknrnq", "rkbbnrnq", "rkbnrbnq", "rkbnrnqb",
+          "rbknbrnq", "rknbbrnq", "rknrbbnq", "rknrbnqb", "rbknrnbq", "rknbrnbq", "rknrnbbq", "rknrnqbb",
+          "bbqrkrnn", "bqrbkrnn", "bqrkrbnn", "bqrkrnnb", "qbbrkrnn", "qrbbkrnn", "qrbkrbnn", "qrbkrnnb",
+          "qbrkbrnn", "qrkbbrnn", "qrkrbbnn", "qrkrbnnb", "qbrkrnbn", "qrkbrnbn", "qrkrnbbn", "qrkrnnbb",
+          "bbrqkrnn", "brqbkrnn", "brqkrbnn", "brqkrnnb", "rbbqkrnn", "rqbbkrnn", "rqbkrbnn", "rqbkrnnb",
+          "rbqkbrnn", "rqkbbrnn", "rqkrbbnn", "rqkrbnnb", "rbqkrnbn", "rqkbrnbn", "rqkrnbbn", "rqkrnnbb",
+          "bbrkqrnn", "brkbqrnn", "brkqrbnn", "brkqrnnb", "rbbkqrnn", "rkbbqrnn", "rkbqrbnn", "rkbqrnnb",
+          "rbkqbrnn", "rkqbbrnn", "rkqrbbnn", "rkqrbnnb", "rbkqrnbn", "rkqbrnbn", "rkqrnbbn", "rkqrnnbb",
+          "bbrkrqnn", "brkbrqnn", "brkrqbnn", "brkrqnnb", "rbbkrqnn", "rkbbrqnn", "rkbrqbnn", "rkbrqnnb",
+          "rbkrbqnn", "rkrbbqnn", "rkrqbbnn", "rkrqbnnb", "rbkrqnbn", "rkrbqnbn", "rkrqnbbn", "rkrqnnbb",
+          "bbrkrnqn", "brkbrnqn", "brkrnbqn", "brkrnqnb", "rbbkrnqn", "rkbbrnqn", "rkbrnbqn", "rkbrnqnb",
+          "rbkrbnqn", "rkrbbnqn", "rkrnbbqn", "rkrnbqnb", "rbkrnqbn", "rkrbnqbn", "rkrnqbbn", "rkrnqnbb",
+          "bbrkrnnq", "brkbrnnq", "brkrnbnq", "brkrnnqb", "rbbkrnnq", "rkbbrnnq", "rkbrnbnq", "rkbrnnqb",
+          "rbkrbnnq", "rkrbbnnq", "rkrnbbnq", "rkrnbnqb", "rbkrnnbq", "rkrbnnbq", "rkrnnbbq", "rkrnnqbb"
+      };
 
 const string PieceToChar(" PNBRQK  pnbrqk");
 const string PieceToSAN(" PNBRQK  PNBRQK");
@@ -288,6 +537,33 @@ Position& Position::set(const string& fenStr, bool isChess960, StateInfo* si, Th
   assert(pos_is_ok());
 
   return *this;
+}
+
+uint16_t Position::lookup_pos(std::string fen) {
+    std::string black_position = fen.substr(0, 8);
+    for (uint16_t i = 0; i < 960; ++i) {
+        if (black_position == blackPositionTable[i]) {
+            return i;
+        }
+    }
+
+    return 518; // standard position's index
+}
+
+std::string Position::lookup_white960_idx(uint16_t idx) {
+    if (idx < 960)
+    {
+        return whitePositionTable[idx];
+    }
+    return whitePositionTable[518]; // standard position
+}
+
+std::string Position::lookup_black960_idx(uint16_t idx) {
+    if (idx < 960)
+    {
+        return blackPositionTable[idx];
+    }
+    return blackPositionTable[518]; // standard position
 }
 
 
