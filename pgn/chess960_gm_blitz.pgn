@@ -1,0 +1,509 @@
+[Event "GM Blitz Battle Chp - chess 960"]
+[Site "Chess.com"]
+[Date "2016.04.06"]
+[Round "?"]
+[White "Grischuk"]
+[Black "LevonAronian"]
+[Result "1-0"]
+[WhiteElo "2766"]
+[BlackElo "2814"]
+[Variant "chess 960"]
+[SetUp "1"]
+[FEN "bbqrknrn/pppppppp/8/8/8/8/PPPPPPPP/BBQRKNRN w GDgd - 0 1"]
+[PlyCount "67"]
+[EventDate "2016.??.??"]
+[TimeControl "300+2"]
+
+1. c4 b6 2. b3 c5 3. Nhg3 Nhg6 4. Ne3 Ne6 5. Nd5 Nef4 6. Nxf4 Nxf4 7. Bxh7 Rh8
+8. Qc2 Kf8 9. O-O-O d5 10. e3 Ne6 11. f4 dxc4 12. bxc4 Qa6 13. Be4 Bxe4 14.
+Nxe4 b5 15. f5 Nc7 16. Nxc5 Qc6 17. cxb5 Qxb5 18. Bd4 Na6 19. Qa4 Qxa4 20. Nxa4
+Nb4 21. a3 Nc6 22. Bc3 Rh4 23. g4 Bd6 24. Bb2 Kg8 25. Rg2 Ne5 26. Bxe5 Bxe5 27.
+d4 Bd6 28. Kb2 Rb8+ 29. Ka2 Rh3 30. Rd3 Rf3 31. Nc3 Rb6 32. Ne4 Bf4 33. Re2 Rh3
+34. Rc3 1-0
+
+[Event "GM Blitz Battle Chp - chess 960"]
+[Site "Chess.com"]
+[Date "2016.04.06"]
+[Round "?"]
+[White "Grischuk"]
+[Black "LevonAronian"]
+[Result "1-0"]
+[WhiteElo "2681"]
+[BlackElo "2899"]
+[Variant "chess 960"]
+[SetUp "1"]
+[FEN "qrbkrnnb/pppppppp/8/8/8/8/PPPPPPPP/QRBKRNNB w EBeb - 0 1"]
+[PlyCount "89"]
+[EventDate "2016.??.??"]
+[TimeControl "180+2"]
+
+1. g3 Nf6 2. Ne3 g6 3. c4 c6 4. b3 b5 5. Bb2 bxc4 6. Nxc4 Ne6 7. Nf3 O-O 8. O-O
+d5 9. Nce5 c5 10. Rbc1 Bb7 11. Bg2 d4 12. Ba3 Rbc8 13. Rc2 Be4 14. d3 Bb7 15.
+Rfc1 Nd5 16. Nd7 Rfd8 17. Nxc5 Nxc5 18. Rxc5 Nc3 19. Qb2 e5 20. Ne1 Bxg2 21.
+Nxg2 e4 22. Qd2 Bg7 23. Rxc8 Rxc8 24. Bb2 Bh6 25. Qxh6 Nxe2+ 26. Kf1 Nxc1 27.
+Bxd4 f6 28. Bxf6 Qb7 29. Ne3 Nxd3 30. Nd5 Rc1+ 31. Ke2 Rc7 32. Nxc7 Qxc7 33.
+Bd4 Qc2+ 34. Qd2 Qb1 35. Ke3 Ne1 36. Qc3 Ng2+ 37. Ke2 Qxa2+ 38. Kf1 e3 39. Qc4+
+Kf8 40. Bc5+ Kg7 41. Qd4+ Kh6 42. Bf8+ Kh5 43. Qd5+ Kg4 44. h3+ Kxh3 45. Qxg2+
+1-0
+
+[Event "GM Blitz Battle Chp - chess 960"]
+[Site "Chess.com"]
+[Date "2016.04.06"]
+[Round "?"]
+[White "LevonAronian"]
+[Black "Grischuk"]
+[Result "0-1"]
+[WhiteElo "2807"]
+[BlackElo "2773"]
+[Variant "chess 960"]
+[SetUp "1"]
+[FEN "rnkqbbrn/pppppppp/8/8/8/8/PPPPPPPP/RNKQBBRN w GAga - 0 1"]
+[PlyCount "108"]
+[EventDate "2016.??.??"]
+[TimeControl "60+1"]
+
+1. d4 d5 2. Ng3 Ng6 3. Nc3 e6 4. e3 c5 5. dxc5 Bxc5 6. Qh5 Qh4 7. Bd3 Qxh5 8.
+Nxh5 Nc6 9. O-O-O O-O-O 10. a3 f5 11. Bb5 Nge5 12. Nf4 Bf7 13. Nd3 Be7 14. Ne2
+a6 15. Bxc6 Nxd3+ 16. cxd3 bxc6 17. Bc3 c5 18. Be5 Bf6 19. Bxf6 gxf6 20. d4
+cxd4 21. Rxd4 Kd7 22. Ra4 Rc8+ 23. Nc3 Rc6 24. Rd1 Rxg2 25. Rd2 Rxh2 26. Kc2 h5
+27. Ra5 h4 28. Kb3 h3 29. Ra4 e5 30. Rh4 Rd6 31. Ka4 Ke6 32. Ka5 d4 33. exd4
+Rxd4 34. Rdxd4 exd4 35. Ne2 Rxf2 36. Nf4+ Kd6 37. Nd3 Rf3 38. Ne1 Rb3 39. Rxd4+
+Ke5 40. Rh4 Bd5 41. Nc2 Be4 42. Nb4 f4 43. Nxa6 f3 44. Nc5 Re3 45. Rxh3 f5 46.
+Rh1 f2 47. Rf1 Re2 48. b4 Kd4 49. Nb3+ Ke3 50. b5 Re1 51. Rxf2 Kxf2 52. a4 Ke3
+53. b6 Rb1 54. Nc5 f4 0-1
+
+[Event "GM Blitz Battle Chp - chess 960"]
+[Site "Chess.com"]
+[Date "2016.05.04"]
+[Round "?"]
+[White "Hikaru"]
+[Black "GMharikrishna"]
+[Result "1/2-1/2"]
+[ECO "A40"]
+[WhiteElo "2819"]
+[BlackElo "2567"]
+[Variant "chess 960"]
+[SetUp "1"]
+[FEN "bbqrknrn/pppppppp/8/8/8/8/PPPPPPPP/BBQRKNRN w GDgd - 0 1"]
+[PlyCount "61"]
+[EventDate "2016.??.??"]
+[TimeControl "300+2"]
+
+1. d4 b5 2. c3 Nhg6 3. Nhg3 d5 4. Bd3 a6 5. a4 bxa4 6. Qc2 Bc6 7. e4 Nf4 8.
+exd5 Nxd3+ 9. Rxd3 Bxd5 10. c4 Bb7 11. Qxa4+ Qd7 12. Qxd7+ Nxd7 13. b3 O-O 14.
+Ne3 Nc5 15. Rd1 Ne4 16. d5 Nxg3 17. hxg3 c6 18. dxc6 Rxd1+ 19. Kxd1 Rd8+ 20.
+Ke2 Bxc6 21. Nf5 Be4 22. Nxe7+ Kf8 23. Nd5 Bxd5 24. cxd5 Rxd5 25. Rc1 Be5 26.
+Bxe5 Rxe5+ 27. Kd2 Rd5+ 28. Ke2 Re5+ 29. Kd2 Rd5+ 30. Ke2 Re5+ 31. Kd2 1/2-1/2
+
+[Event "GM Blitz Battle Chp - chess 960"]
+[Site "Chess.com"]
+[Date "2016.05.04"]
+[Round "?"]
+[White "Hikaru"]
+[Black "GMharikrishna"]
+[Result "1-0"]
+[WhiteElo "2803"]
+[BlackElo "2618"]
+[Variant "chess 960"]
+[SetUp "1"]
+[FEN "qrbkrnnb/pppppppp/8/8/8/8/PPPPPPPP/QRBKRNNB w EBeb - 0 1"]
+[PlyCount "83"]
+[EventDate "2016.??.??"]
+[TimeControl "180+2"]
+
+1. g4 g6 2. Ng3 a5 3. a4 Qa7 4. e3 b6 5. f4 Bb7 6. Nf3 Qa8 7. O-O Ne6 8. Qa2
+Nh6 9. h3 f5 10. g5 Nf7 11. b3 h6 12. h4 hxg5 13. hxg5 Nc5 14. b4 axb4 15. Qxf7
+Qxa4 16. Qxg6 Qxc2 17. Rxb4 Nd3 18. Nd4 Bxd4 19. Rxd4 Bxh1 20. Qxf5 Qc6 21.
+Nxh1 Nxc1 22. Ng3 Nb3 23. Rd3 Nc5 24. Rc3 Qd6 25. d4 Na4 26. Rc2 b5 27. Ne4 Qa3
+28. Kf2 Qd3 29. Rd2 Qc4 30. g6 b4 31. g7 b3 32. Nc5 Nb6 33. Rg1 Qg8 34. Rb2 d6
+35. Ne6+ Kd7 36. Rg6 Kc6 37. Rxb3 Nd5 38. e4 Nf6 39. Rc3+ Kb6 40. Rg1 c5 41.
+dxc5+ Kc6 42. cxd6+ 1-0
+
+[Event "GM Blitz Battle Chp - chess 960"]
+[Site "Chess.com"]
+[Date "2016.05.04"]
+[Round "?"]
+[White "GMharikrishna"]
+[Black "Hikaru"]
+[Result "0-1"]
+[WhiteElo "2701"]
+[BlackElo "2770"]
+[Variant "chess 960"]
+[SetUp "1"]
+[FEN "rnkqbbrn/pppppppp/8/8/8/8/PPPPPPPP/RNKQBBRN w GAga - 0 1"]
+[PlyCount "56"]
+[EventDate "2016.??.??"]
+[TimeControl "60+1"]
+
+1. Ng3 Ng6 2. e3 d6 3. d4 e5 4. Nc3 Nc6 5. d5 Nce7 6. Bd3 Bd7 7. Qh5 h6 8. Bd2
+Nh8 9. f4 g6 10. Qf3 f5 11. e4 exf4 12. Bxf4 g5 13. Bd2 f4 14. Nf5 Nf7 15. Bb5
+Nxf5 16. exf5 Bxf5 17. g3 Ne5 18. Qf2 f3 19. Ne2 Bg7 20. Nd4 Qf6 21. Bc3 Be4
+22. Re1 Bxd5 23. O-O-O a6 24. Ba4 Ng4 25. Qf1 f2 26. Re2 Bc4 27. Qh3 Bxe2 28.
+Nxe2 Qf3 0-1
+
+[Event "GM Blitz Battle Chp - chess 960"]
+[Site "Chess.com"]
+[Date "2016.05.10"]
+[Round "?"]
+[White "FabianoCaruana"]
+[Black "LyonBeast"]
+[Result "1-0"]
+[ECO "A30"]
+[WhiteElo "2676"]
+[BlackElo "2764"]
+[Variant "chess 960"]
+[SetUp "1"]
+[FEN "bbqrknrn/pppppppp/8/8/8/8/PPPPPPPP/BBQRKNRN w GDgd - 0 1"]
+[PlyCount "38"]
+[EventDate "2016.??.??"]
+[TimeControl "300+2"]
+
+1. c4 c5 2. Nhg3 b6 3. b3 Nhg6 4. Ne3 e6 5. O-O Nf4 6. d4 N8g6 7. d5 O-O 8. Bc3
+Rfe8 9. Qb2 exd5 10. Nxd5 Nxd5 11. cxd5 f6 12. Bxg6 hxg6 13. Bxf6 gxf6 14. Qxf6
+Qc7 15. Qxg6+ Kh8 16. d6 Qc6 17. e4 Rxe4 18. Qf6+ Kh7 19. Qxd8 Rd4 1-0
+
+[Event "GM Blitz Battle Chp - chess 960"]
+[Site "Chess.com"]
+[Date "2016.05.10"]
+[Round "?"]
+[White "LyonBeast"]
+[Black "FabianoCaruana"]
+[Result "1/2-1/2"]
+[ECO "A00"]
+[WhiteElo "2749"]
+[BlackElo "2697"]
+[Variant "chess 960"]
+[SetUp "1"]
+[FEN "qrbkrnnb/pppppppp/8/8/8/8/PPPPPPPP/QRBKRNNB w EBeb - 0 1"]
+[PlyCount "98"]
+[EventDate "2016.??.??"]
+[TimeControl "180+2"]
+
+1. g4 g6 2. g5 f5 3. a4 e5 4. b4 Ne6 5. h4 Ne7 6. Bb2 d6 7. Ne3 Bd7 8. b5 O-O-O
+9. c4 e4 10. Nh3 Bxb2 11. Rxb2 a5 12. f3 b6 13. fxe4 fxe4 14. Nf2 Nc5 15. d4
+Nf5 16. Nxf5 Bxf5 17. dxc5 dxc5+ 18. Kc1 Kb8 19. e3 Ka7 20. Rd1 Qb8 21. Rbd2
+Rxd2 22. Rxd2 Re7 23. Qf6 Qe8 24. Bg2 Rf7 25. Qd8 Qe5 26. Kb1 Qc3 27. Nd1 Qxc4
+28. Nb2 Qc3 29. Qe8 Qxd2 30. Qxf7 Kb7 31. Nc4 Qxg2 32. Nd6+ Kb8 33. Nxf5 Qf1+
+34. Kc2 Qd3+ 35. Kb2 gxf5 36. Qxh7 c4 37. Qh8+ Kb7 38. Qc3 Qe2+ 39. Ka3 f4 40.
+g6 fxe3 41. g7 Qg2 42. Qxe3 Qxg7 43. Qxe4+ Kb8 44. Qxc4 Qa1+ 45. Kb3 Qb1+ 46.
+Ka3 Qa1+ 47. Kb3 Qb1+ 48. Kc3 Qc1+ 49. Kb3 Qb1+ 1/2-1/2
+
+[Event "GM Blitz Battle Chp - chess 960"]
+[Site "Chess.com"]
+[Date "2016.05.10"]
+[Round "?"]
+[White "FabianoCaruana"]
+[Black "LyonBeast"]
+[Result "1/2-1/2"]
+[ECO "D00"]
+[WhiteElo "2685"]
+[BlackElo "2759"]
+[Variant "chess 960"]
+[SetUp "1"]
+[FEN "rnkqbbrn/pppppppp/8/8/8/8/PPPPPPPP/RNKQBBRN w GAga - 0 1"]
+[PlyCount "131"]
+[EventDate "2016.??.??"]
+[TimeControl "60+1"]
+
+1. d4 d5 2. Nc3 e6 3. e4 Nc6 4. e5 f6 5. f4 g5 6. exf6 Qxf6 7. fxg5 Qxd4 8.
+Qxd4 Nxd4 9. h4 h6 10. Bf2 Nc6 11. gxh6 Bxh6+ 12. Kb1 Ne5 13. Be2 Ng4 14. Bd4
+Be3 15. Bxg4 Bxd4 16. Bxe6+ Bd7 17. Bxg8 Bxg1 18. Bxd5 c6 19. Be4 Kc7 20. a3
+Rf8 21. Ka2 Bh2 22. Rd1 Bg4 23. Rd2 Be5 24. Nf2 Be6+ 25. Kb1 Nf7 26. Nd3 Bg3
+27. h5 Ng5 28. Bg6 Bg4 29. b4 Rf1+ 30. Kb2 Rh1 31. Nc5 b6 32. N5e4 Nxe4 33.
+Nxe4 Be5+ 34. c3 Bxh5 35. Bxh5 Rxh5 36. Re2 Rh4 37. Kc2 Rg4 38. Nd2 Kd6 39. Nf3
+Bf6 40. Kd3 b5 41. Nd2 Kd5 42. Ne4 Be5 43. Nd2 Rg3+ 44. Nf3 Bf6 45. Rd2 a6 46.
+Re2 Rg7 47. Rd2 Rg4 48. Re2 Rg3 49. Rd2 c5 50. bxc5 Kxc5 51. Re2 Kd5 52. Rd2
+Rg4 53. Re2 Rc4 54. Rc2 Ra4 55. Ra2 Be7 56. Nd2 Rxa3 57. Rxa3 Bxa3 58. c4+
+bxc4+ 59. Nxc4 Be7 60. Ne3+ Ke5 61. Nc4+ Kf4 62. Kc3 Kg3 63. Kb3 Kxg2 64. Ka4
+a5 65. Kxa5 Bb4+ 66. Kxb4 1/2-1/2
+
+[Event "GM Blitz Battle Chp - chess 960"]
+[Site "Chess.com"]
+[Date "2016.06.23"]
+[Round "?"]
+[White "MagnusCarlsen"]
+[Black "TigranLPetrosyan"]
+[Result "1-0"]
+[ECO "A30"]
+[WhiteElo "2890"]
+[BlackElo "2608"]
+[Variant "chess 960"]
+[SetUp "1"]
+[FEN "bbqrknrn/pppppppp/8/8/8/8/PPPPPPPP/BBQRKNRN w GDgd - 0 1"]
+[PlyCount "93"]
+[EventDate "2016.??.??"]
+[TimeControl "300+2"]
+
+1. c4 c5 2. b3 b6 3. Nhg3 Nhg6 4. Ne3 Be5 5. Bxe5 Nxe5 6. O-O Nc6 7. Nef5 d6 8.
+d4 e6 9. d5 exf5 10. Bxf5 Qc7 11. dxc6 Bxc6 12. Qe3+ Qe7 13. Ne4 Bxe4 14. Bxe4
+Nd7 15. Rd3 Ne5 16. Rd2 O-O 17. Rfd1 Rfe8 18. Bd5 g6 19. Qf4 Kg7 20. h4 h6 21.
+Qg3 Qf6 22. e3 h5 23. Qf4 Qxf4 24. exf4 Ng4 25. Bf3 Re6 26. g3 Nh6 27. Bg2 f5
+28. Bd5 Re7 29. a3 a5 30. b4 axb4 31. axb4 cxb4 32. Rb1 Ng4 33. Rxb4 Re1+ 34.
+Kg2 Rc1 35. Rxb6 Re8 36. Rxd6 Ree1 37. Rb2 Rg1+ 38. Kh3 Rcf1 39. Rd7+ Kh6 40.
+Bg8 Rh1+ 41. Kg2 Rhg1+ 42. Kf3 Nh2+ 43. Ke2 Re1+ 44. Kd3 Rd1+ 45. Rd2 g5 46.
+hxg5+ Kg6 47. Bh7# 1-0
+
+[Event "GM Blitz Battle Chp - chess 960"]
+[Site "Chess.com"]
+[Date "2016.06.23"]
+[Round "?"]
+[White "MagnusCarlsen"]
+[Black "TigranLPetrosyan"]
+[Result "1-0"]
+[ECO "A00"]
+[WhiteElo "2814"]
+[BlackElo "2621"]
+[Variant "chess 960"]
+[SetUp "1"]
+[FEN "qrbkrnnb/pppppppp/8/8/8/8/PPPPPPPP/QRBKRNNB w EBeb - 0 1"]
+[PlyCount "123"]
+[EventDate "2016.??.??"]
+[TimeControl "180+2"]
+
+1. g3 g6 2. Nf3 e5 3. e4 Ne6 4. Ne3 d6 5. Bg2 Nf6 6. d3 Bg7 7. O-O O-O 8. a4 a5
+9. Bd2 Bd7 10. Qa2 b6 11. h4 Rbe8 12. Rbe1 Qc8 13. Qc4 Nc5 14. b3 Be6 15. Qc3
+d5 16. exd5 Nxd5 17. Nxd5 Bxd5 18. Nxe5 Bxg2 19. Kxg2 Qb7+ 20. f3 Nd7 21. d4 c5
+22. Qc4 Bxe5 23. dxe5 Nxe5 24. Qc3 f6 25. Bf4 Qd5 26. Rd1 Qc6 27. Rfe1 Re6 28.
+Bxe5 Rxe5 29. Rxe5 fxe5 30. Rd3 Qe6 31. Re3 Rf5 32. g4 Rf7 33. Rxe5 Qd7 34. h5
+Qc6 35. h6 Kf8 36. g5 Qd7 37. Re4 Kg8 38. Qe5 Qf5 39. Qe8+ Rf8 40. Qe6+ Rf7 41.
+f4 Qxe6 42. Rxe6 Rxf4 43. Rxb6 Rg4+ 44. Kf3 Rxg5 45. Rb8+ Kf7 46. Rh8 Rh5 47.
+Rxh7+ Kf6 48. Rc7 Rxh6 49. Rxc5 Rh2 50. Kf4 Rf2+ 51. Ke3 Rg2 52. c3 Rb2 53. Rb5
+g5 54. Kf3 Kg6 55. c4 Kh5 56. c5 Rc2 57. Ke4 g4 58. Kd3 Rc1 59. Kd2 Rf1 60. c6+
+Kh4 61. c7 Rf8 62. Rb8 1-0
+
+[Event "GM Blitz Battle Chp - chess 960"]
+[Site "Chess.com"]
+[Date "2016.06.23"]
+[Round "?"]
+[White "TigranLPetrosyan"]
+[Black "MagnusCarlsen"]
+[Result "1-0"]
+[ECO "A00"]
+[WhiteElo "2608"]
+[BlackElo "2880"]
+[Variant "chess 960"]
+[SetUp "1"]
+[FEN "rnkqbbrn/pppppppp/8/8/8/8/PPPPPPPP/RNKQBBRN w GAga - 0 1"]
+[PlyCount "127"]
+[EventDate "2016.??.??"]
+[TimeControl "60+1"]
+
+1. g3 d6 2. Bg2 e6 3. f4 Bc6 4. e4 d5 5. Nf2 dxe4 6. Nxe4 Ng6 7. Nbc3 Nd7 8.
+Bf2 Qe7 9. Qe2 O-O-O 10. O-O-O Kb8 11. d4 Nb6 12. Bf3 Qe8 13. Rge1 Bb4 14. a3
+Bxe4 15. axb4 Bxf3 16. Qxf3 Ne7 17. b3 a6 18. Kb2 Nbd5 19. Nxd5 Nxd5 20. c3 Qc6
+21. Qd3 g6 22. Qc4 Rd6 23. Qxc6 Rxc6 24. Rd3 Rd8 25. Red1 h5 26. Be1 Ne7 27. c4
+Rcd6 28. Kc3 Nf5 29. Bf2 R6d7 30. h3 Nd6 31. Re1 c6 32. g4 Rh8 33. Bg3 Kc8 34.
+Re5 hxg4 35. hxg4 Rh1 36. Kc2 Rg1 37. d5 cxd5 38. cxd5 Nb5 39. dxe6 Rg2+ 40.
+Kc1 Rc7+ 41. Kd1 fxe6 42. Rxe6 Rd7 43. Ree3 Nc3+ 44. Ke1 Nd5 45. Re8+ Kc7 46.
+f5+ Kc6 47. Rc8+ Kb5 48. fxg6 Re7+ 49. Kf1 Nb6 50. Kxg2 Nxc8 51. Kh3 Rg7 52. g5
+Kxb4 53. Kg4 Rxg6 54. Kh5 Rg8 55. g6 b5 56. Kh6 Rh8+ 57. Kg5 Rg8 58. Kf6 Rf8+
+59. Ke6 Ka3 60. g7 Rg8 61. Kf7 Rxg7+ 62. Kxg7 Nb6 63. Kf6 a5 64. Bc7 1-0
+
+[Event "GM Blitz Battle Chp - chess 960"]
+[Site "Chess.com"]
+[Date "2016.08.23"]
+[Round "?"]
+[White "Grischuk"]
+[Black "MagnusCarlsen"]
+[Result "1-0"]
+[ECO "C20"]
+[WhiteElo "2773"]
+[BlackElo "2880"]
+[Variant "chess 960"]
+[SetUp "1"]
+[FEN "qnnbbrkr/pppppppp/8/8/8/8/PPPPPPPP/QNNBBRKR w HFhf - 0 1"]
+[PlyCount "43"]
+[EventDate "2016.??.??"]
+[TimeControl "300+2"]
+
+1. e4 e5 2. b3 Nc6 3. d3 N8e7 4. f4 exf4 5. Bc3 f6 6. Ne2 d5 7. Nxf4 Bf7 8. Nd2
+Qc8 9. Nh5 Bxh5 10. Bxh5 Qd7 11. Rf2 d4 12. Bb2 Ng6 13. a3 a5 14. O-O Nge5 15.
+b4 g6 16. Bd1 axb4 17. axb4 Nxb4 18. Bxd4 Be7 19. Bxe5 fxe5 20. Qxe5 Nc6 21.
+Rxf8+ Bxf8 22. Rxf8+ 1-0
+
+[Event "GM Blitz Battle Chp - chess 960"]
+[Site "Chess.com"]
+[Date "2016.08.23"]
+[Round "?"]
+[White "Grischuk"]
+[Black "MagnusCarlsen"]
+[Result "0-1"]
+[ECO "A00"]
+[WhiteElo "2774"]
+[BlackElo "2878"]
+[Variant "chess 960"]
+[SetUp "1"]
+[FEN "rnnkrbbq/pppppppp/8/8/8/8/PPPPPPPP/RNNKRBBQ w EAea - 0 1"]
+[PlyCount "40"]
+[EventDate "2016.??.??"]
+[TimeControl "180+2"]
+
+1. g3 Nc6 2. Nc3 f5 3. f4 g6 4. Nb3 Nb6 5. O-O-O O-O-O 6. e4 fxe4 7. Nxe4 Kb8
+8. Bg2 d5 9. Nec5 e5 10. fxe5 Rxe5 11. d4 Rxe1 12. Rxe1 Bxc5 13. dxc5 Na4 14.
+c3 Nxc3 15. bxc3 Qxc3+ 16. Kd1 Nb4 17. Re2 d4 18. Nxd4 Bxa2 19. Rd2 Bc4 20. Ke1
+Nc2+ 0-1
+
+[Event "GM Blitz Battle Chp - chess 960"]
+[Site "Chess.com"]
+[Date "2016.08.23"]
+[Round "?"]
+[White "MagnusCarlsen"]
+[Black "Grischuk"]
+[Result "1-0"]
+[ECO "A40"]
+[WhiteElo "2840"]
+[BlackElo "2816"]
+[Variant "chess 960"]
+[SetUp "1"]
+[FEN "nrnbbkrq/pppppppp/8/8/8/8/PPPPPPPP/NRNBBKRQ w GBgb - 0 1"]
+[PlyCount "49"]
+[EventDate "2016.??.??"]
+[TimeControl "60+1"]
+
+1. d4 g6 2. Nab3 Nab6 3. e4 d5 4. exd5 Bb5+ 5. Be2 Bxe2+ 6. Nxe2 Nxd5 7. g3 c6
+8. c4 Nf6 9. Qf3 Nd6 10. Rc1 O-O 11. O-O Qg7 12. Nc5 Re8 13. b3 g5 14. Bb4 Qg6
+15. Nc3 Rc8 16. Nd3 Qf5 17. Qe2 h5 18. Ne5 Nde4 19. f3 Nxc3 20. Bxc3 Qe6 21. f4
+Qf5 22. fxg5 Qxg5 23. Bd2 Qg7 24. Rf5 Nh7 25. Rxf7 1-0
+
+[Event "GM Blitz Battle Chp - chess 960"]
+[Site "Chess.com"]
+[Date "2016.08.24"]
+[Round "?"]
+[White "LyonBeast"]
+[Black "Hikaru"]
+[Result "0-1"]
+[ECO "A10"]
+[WhiteElo "2792"]
+[BlackElo "2888"]
+[Variant "chess 960"]
+[SetUp "1"]
+[FEN "qnnbbrkr/pppppppp/8/8/8/8/PPPPPPPP/QNNBBRKR w HFhf - 0 1"]
+[PlyCount "76"]
+[EventDate "2016.??.??"]
+[TimeControl "300+2"]
+
+1. c4 Nc6 2. e3 e5 3. d3 a6 4. Nc3 d6 5. Bf3 f5 6. Nb3 Bf7 7. Bd2 Nb6 8. Nd5
+Nxd5 9. Bxd5 Bxd5 10. cxd5 Ne7 11. e4 f4 12. Qd1 Qc8 13. Qh5 g6 14. Qf3 c5 15.
+dxc6 Nxc6 16. Bc3 a5 17. Rc1 a4 18. Nd2 Qe6 19. O-O Rf7 20. b3 axb3 21. Nxb3
+Bb6 22. Rfd1 O-O 23. d4 Qf6 24. d5 Nb8 25. Bb4 Na6 26. Ba3 Ra8 27. Rc2 Nc7 28.
+Bb4 g5 29. Rdc1 Qg6 30. Nd2 g4 31. Qd3 g3 32. Nf3 gxf2+ 33. Kf1 Rg7 34. Nh4 Qg4
+35. Qh3 Qxh3 36. gxh3 Rg1+ 37. Ke2 Nb5 38. Nf5 Rxa2 0-1
+
+[Event "GM Blitz Battle Chp - chess 960"]
+[Site "Chess.com"]
+[Date "2016.08.24"]
+[Round "?"]
+[White "Hikaru"]
+[Black "LyonBeast"]
+[Result "1-0"]
+[ECO "B06"]
+[WhiteElo "2888"]
+[BlackElo "2792"]
+[Variant "chess 960"]
+[SetUp "1"]
+[FEN "rnnkrbbq/pppppppp/8/8/8/8/PPPPPPPP/RNNKRBBQ w EAea - 0 1"]
+[PlyCount "23"]
+[EventDate "2016.??.??"]
+[TimeControl "180+2"]
+
+1. e4 g6 2. Nc3 Bg7 3. f4 d6 4. Nb3 Nc6 5. Bb5 f5 6. exf5 gxf5 7. g3 Bf7 8.
+Bxc6 bxc6 9. Qxc6 Bh5+ 10. Kc1 Rb8 11. Nd5 Bxb2+ 12. Kb1 1-0
+
+[Event "GM Blitz Battle Chp - chess 960"]
+[Site "Chess.com"]
+[Date "2016.08.24"]
+[Round "?"]
+[White "Hikaru"]
+[Black "LyonBeast"]
+[Result "0-1"]
+[ECO "A41"]
+[WhiteElo "2888"]
+[BlackElo "2792"]
+[Variant "chess 960"]
+[SetUp "1"]
+[FEN "nrnbbkrq/pppppppp/8/8/8/8/PPPPPPPP/NRNBBKRQ w GBgb - 0 1"]
+[PlyCount "70"]
+[EventDate "2016.??.??"]
+[TimeControl "60+1"]
+
+1. d4 d6 2. c4 b5 3. c5 Bc6 4. Ncb3 g6 5. Bc2 e6 6. Bb4 Bf6 7. Rd1 O-O 8. e4
+Rd8 9. O-O Ne7 10. Rfe1 Bb7 11. cxd6 cxd6 12. e5 dxe5 13. dxe5 Rxd1 14. Rxd1
+Nd5 15. Bd6 Bxe5 16. Bxb8 Bxb8 17. Na5 Ba6 18. Bb3 Qxb2 19. g3 Nab6 20. Qe4 Be5
+21. Qc2 Qxc2 22. Nxc2 Nc4 23. Nc6 Bc7 24. Nxa7 Bb6 25. Nc6 Kg7 26. N2b4 Nxb4
+27. Nxb4 Bb7 28. Rd7 Bf3 29. a4 Ne5 30. Rd2 Ba5 31. Rd4 Bxb4 32. Rxb4 bxa4 33.
+Rxa4 Bc6 34. Ra5 Nf3+ 35. Kf1 Nd2+ 0-1
+
+[Event "GM Blitz Battle Chp - chess 960"]
+[Site "Chess.com"]
+[Date "2016.10.27"]
+[Round "?"]
+[White "Hikaru"]
+[Black "MagnusCarlsen"]
+[Result "1-0"]
+[ECO "A10"]
+[WhiteElo "3025"]
+[BlackElo "2692"]
+[Variant "chess 960"]
+[SetUp "1"]
+[FEN "nqrkbbrn/pppppppp/8/8/8/8/PPPPPPPP/NQRKBBRN w GCgc - 0 1"]
+[PlyCount "59"]
+[EventDate "2016.??.??"]
+[TimeControl "300+2"]
+
+1. c4 Ng6 2. f4 c5 3. g3 e6 4. Bg2 Nb6 5. Nb3 d5 6. cxd5 exd5 7. Bf2 d4 8. O-O
+Be7 9. Qf5 Qd6 10. Na5 Rc7 11. b4 c4 12. Nxb7+ Rxb7 13. Bxb7 Bd7 14. Qe4 Bf6
+15. Qg2 Re8 16. e4 dxe3 17. dxe3 Qxb4 18. Bc6 c3 19. Rfd1 Kc7 20. Bxd7 Nxd7 21.
+g4 h6 22. Ng3 Nb6 23. Nh5 Nh4 24. Bxh4 Bxh4 25. Qd2 Kb7 26. Qxc3 Qe4 27. Qc7+
+Ka8 28. Qc6+ Qxc6 29. Rxc6 Kb7 30. Nxg7 1-0
+
+[Event "GM Blitz Battle Chp - chess 960"]
+[Site "Chess.com"]
+[Date "2016.10.27"]
+[Round "?"]
+[White "MagnusCarlsen"]
+[Black "Hikaru"]
+[Result "1/2-1/2"]
+[ECO "B20"]
+[WhiteElo "2780"]
+[BlackElo "2942"]
+[Variant "chess 960"]
+[SetUp "1"]
+[FEN "nqrkbnrb/pppppppp/8/8/8/8/PPPPPPPP/NQRKBNRB w GCgc - 0 1"]
+[PlyCount "100"]
+[EventDate "2016.??.??"]
+[TimeControl "180+2"]
+
+1. e4 c5 2. g3 g5 3. Ne3 Ng6 4. c3 d6 5. d3 Ba4+ 6. Nac2 Ne5 7. b3 Bb5 8. c4
+Bd7 9. Ke2 Nc7 10. d4 Ng6 11. Rd1 Ne6 12. Bc3 b5 13. Ba5+ Ke8 14. dxc5 dxc5 15.
+Nd5 bxc4 16. bxc4 Qxb1 17. Rxb1 Ne5 18. Bc3 Nxc4 19. Bxh8 Rxh8 20. Rgc1 Ba4 21.
+Nce3 Nd4+ 22. Ke1 Nxe3 23. fxe3 Nb5 24. e5 Kf8 25. Be4 e6 26. Nf6 Kg7 27. Rc4
+Na3 28. Rxa4 Nxb1 29. Bxb1 c4 30. Rxa7 c3 31. Bc2 Rc5 32. Nh5+ Kh6 33. g4 Rf8
+34. Nf6 Rb5 35. Rc7 Rb2 36. Rxc3 Rxa2 37. Rc7 Kg7 38. Kf2 Rd8 39. Kf3 Rd2 40.
+Bxh7 Rf2+ 41. Ke4 Ra8 42. Kd3 Rd8+ 43. Kc3 Rxf6 44. exf6+ Kxh7 45. Rxf7+ Kg6
+46. Rc7 Kxf6 47. Rh7 Kg6 48. Rh5 e5 49. Rh3 e4 50. Kc4 Rd3 1/2-1/2
+
+[Event "GM Blitz Battle Chp - chess 960"]
+[Site "Chess.com"]
+[Date "2016.10.27"]
+[Round "?"]
+[White "Hikaru"]
+[Black "MagnusCarlsen"]
+[Result "1-0"]
+[ECO "C20"]
+[WhiteElo "3013"]
+[BlackElo "2704"]
+[Variant "chess 960"]
+[SetUp "1"]
+[FEN "brkbrqnn/pppppppp/8/8/8/8/PPPPPPPP/BRKBRQNN w EBeb - 0 1"]
+[PlyCount "85"]
+[EventDate "2016.??.??"]
+[TimeControl "60+1"]
+
+1. e4 e5 2. Ng3 Nf6 3. f4 exf4 4. Qxf4 Ng6 5. Qf1 d5 6. Qf5+ Nd7 7. Qxd5 Nge5
+8. Qa5 b6 9. Qc3 c5 10. Nf3 Bc6 11. b4 Bf6 12. Qa3 cxb4 13. Qa6+ Bb7 14. Qe2
+Nxf3 15. Qxf3 Bxa1 16. Rxa1 Ne5 17. Qf5+ Kd8 18. d4 Nc4 19. Be2 Rc8 20. Bd3 Qd6
+21. Qg5+ f6 22. Qxg7 Qxd4 23. Rb1 Ne5 24. Qxf6+ Kc7 25. Qf4 Rf8 26. Qe3 Qc3 27.
+Kd1 Kb8 28. Rb3 Qa1+ 29. Kd2 Qxa2 30. Rc1 Rfd8 31. Qf4 Rc5 32. Ke1 a5 33. Be2
+Ka7 34. Nf5 Rxc2 35. Rxc2 Qxc2 36. Rh3 Nd3+ 37. Bxd3 Rxd3 38. Rxd3 Qxd3 39. Nd6
+b3 40. Qe5 b2 41. Nb5+ Qxb5 42. Qxb5 Bxe4 43. Qxb2 1-0
+

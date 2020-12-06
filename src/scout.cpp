@@ -137,7 +137,12 @@ void search(Thread* th) {
       Move* gameOfsPtr = data;
       data += 4;
 
-      // Fifth move stores the result in the 'to' square
+      // Fifth move stores whether this is chess960
+      bool chess960 = bool(to_sq(Move(*data++)));
+      // Sixth move stores the chess 960 position
+      uint16_t chess960_idx = uint16_t(Move(*data++));
+
+      // Seventh move stores the result in the 'to' square
       GameResult result = GameResult(to_sq(Move(*data)));
 
       // If needed, reset conditions before starting a new game
@@ -149,13 +154,16 @@ void search(Thread* th) {
 
       st = states;
       Position pos = th->rootPos;
+      if (chess960) {
+          std::string startFEN = Position::lookup_black960_idx(chess960_idx) +
+            "/pppppppp/8/8/8/8/PPPPPPPP/" + Position::lookup_white960_idx(chess960_idx) + " w KQkq - 0 1";
+          pos.set(startFEN, chess960, st++, th);
+      }
       Move move = MOVE_NONE;
       data++; // First move of the game
 
       // Loop across the game (that could be empty)
       do {
-          assert(!move || (pos.pseudo_legal(move) && pos.legal(move)));
-
           Move nextMove = *data;
 
           // If we are looking for a streak, fail and reset as soon as last
@@ -299,6 +307,8 @@ SkipToNextGame:
 
           // Do the move after rule checking
           move = *data;
+          assert(!move || (pos.pseudo_legal(move) && pos.legal(move)));
+
           if (move) {
               movedPiece = pos.moved_piece(move);
               pos.do_move(move, *st++, pos.gives_check(move));
@@ -321,8 +331,8 @@ void print_results(const Search::LimitsType& limits) {
   TimePoint elapsed = now() - limits.startTime + 1;
   Scout::Data d = Threads.main()->scout;
   size_t cnt = 0, matches = 0;
-
-  mem_unmap(d.baseAddress, d.dbMapping);
+  
+  mem_unmap((void *)((uint64_t *)d.baseAddress - 1), d.dbMapping);
 
   for (Thread* th : Threads)
   {

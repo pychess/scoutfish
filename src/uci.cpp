@@ -163,9 +163,19 @@ namespace {
 
     mem_map(dbName.c_str(), &baseAddress, &mapping, &size);
 
+    // read version in big-endian
+    uint64_t version = *(uint64_t *)baseAddress;
+    read_be(version, (uint8_t*)baseAddress);
+    if (version != SCOUT_FILE_VERSION)
+    {
+        cerr << "Scout file version mismatch, regenerate your .scout file using the 'make <PGN file path>' command." << endl;
+        exit(0);
+    }
+
+    baseAddress = (void *)((uint64_t *)baseAddress + 1);
     d.baseAddress = (Move*)baseAddress;
     d.dbMapping = mapping;
-    d.dbSize = size / sizeof(Move);
+    d.dbSize = (size - sizeof(SCOUT_FILE_VERSION))/ sizeof(Move);
 
     Scout::parse_query(d, is);
 

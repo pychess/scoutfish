@@ -166,6 +166,12 @@ public:
   bool pos_is_ok(int* failedStep = nullptr) const;
   void flip();
 
+  // lookup the chess960 position number for the fen string
+  static const uint16_t chess960_std_pos_idx;
+  static uint16_t lookup_chess960_pos(std::string fen);
+  static std::string lookup_white960_idx(uint16_t idx);
+  static std::string lookup_black960_idx(uint16_t idx);
+
 private:
   // Initialization helpers (used while setting up a position)
   void set_castling_right(Color c, Square rfrom);

@@ -87,7 +87,7 @@ void error(Step* state, const char* data) {
 template<bool DryRun = false>
 const char* parse_game(const char* moves, const char* end, std::ofstream& db,
                        const char* fen, const char* fenEnd, size_t& fixed,
-                       uint64_t ofs, GameResult result) {
+                       uint64_t ofs, bool chess960, GameResult result) {
 
     static_assert(sizeof(uint64_t) == 4 * sizeof(Move), "Wrong Move size");
 
@@ -99,8 +99,8 @@ const char* parse_game(const char* moves, const char* end, std::ofstream& db,
 
     if (fenEnd != fen)
     {
-        pos.set(fen, false, st++, pos.this_thread());
-        standard = false;
+        pos.set(fen, chess960, st++, pos.this_thread());
+        standard = chess960; // chess960 with starting fen is ok
     }
 
     assert(!(uintptr_t(curMove) & 1)); // At least Move aligned
@@ -111,6 +111,12 @@ const char* parse_game(const char* moves, const char* end, std::ofstream& db,
     // In case of * or any unknown result char, set it to RESULT_UNKNOWN
     if (result < GameResult::WhiteWin || result > GameResult::Draw)
         result = GameResult::Unknown;
+
+    // Write chess960 boolean value as a special move where the 'to' square stores the chess960 value
+    *curMove++ = make_move(SQ_A1, Square(chess960));
+
+    // Write chess960 position value or standard position index as a special move
+    *curMove++ = Move(strlen(fen) > 0 ? Position::lookup_chess960_pos(fen) : Position::chess960_std_pos_idx);
 
     // Write result as a special move where the 'to' square stores the result
     *curMove++ = make_move(SQ_A1, Square(result));
@@ -184,6 +190,7 @@ void parse_pgn(void* baseAddress, uint64_t size, PGNStats& stats, std::ofstream&
     char* eof = data + size;
     int stm = WHITE;
     Step* state = ToStep[HEADER];
+    bool chess960 = false;
 
     for (  ; data < eof; ++data)
     {
@@ -202,26 +209,48 @@ void parse_pgn(void* baseAddress, uint64_t size, PGNStats& stats, std::ofstream&
             if (!strncmp(data-1, "[Event ", 7))
             {
                 data -= 2;
+                chess960 = false;
                 state = ToStep[HEADER];
             }
             break;
 
         case OPEN_TAG:
             *stateSp++ = state;
-            if (*(data + 1) == 'F' && !strncmp(data+1, "FEN \"", 5))
+            if (*(data + 1) == 'E' && !strncmp(data, "[Event ", 7))
+            {
+                chess960 = false;
+                state = ToStep[TAG];
+                ofs = (data - (char*)baseAddress); // Beginning of game
+            }
+            else if (*(data + 1) == 'F' && !strncmp(data+1, "FEN \"", 5))
             {
                 data += 5;
                 state = ToStep[FEN_TAG];
             }
             else if (   *(data + 1) == 'V'
-                     && !strncmp(data+1, "Variant ", 8)
-                     &&  strncmp(data+9, "\"Standard\"", 10))
+                     && !strncmp(data+1, "Variant ", 8))
             {
-                --stateSp; // Pop state, we are inside brackets
-                state = ToStep[SKIP_GAME];
+                if (    strncmp(data+9, "\"Standard\"", 10)
+                    &&  strstr(data+9, "960") == nullptr
+                    &&  strncmp(data+9, "\"Fischerandom\"", 14))
+                {
+                    --stateSp; // Pop state, we are inside brackets
+                    state = ToStep[SKIP_GAME];
+                }
+                else
+                {
+                    if (   strstr(data+9, "960")
+                        || !strncmp(data+9, "\"Fischerandom\"", 14))
+                    {
+                        chess960 = true;
+                    }
+                    state = ToStep[TAG];
+                }
             }
             else
+            {
                 state = ToStep[TAG];
+            }
             break;
 
         case OPEN_BRACE_COMMENT:
@@ -303,7 +332,7 @@ void parse_pgn(void* baseAddress, uint64_t size, PGNStats& stats, std::ofstream&
                 state = ToStep[RESULT];
                 break;
             }
-            parse_game(moves, end, db, fen, fenEnd, fixed, ofs, result);
+            parse_game(moves, end, db, fen, fenEnd, fixed, ofs, chess960, result);
             gameCnt++;
             result = GameResult::Unknown;
             ofs = (data - (char*)baseAddress) + 1; // Beginning of next game
@@ -321,7 +350,7 @@ void parse_pgn(void* baseAddress, uint64_t size, PGNStats& stats, std::ofstream&
              /* Fall through */
 
         case MISSING_RESULT: // Missing result, next game already started
-            parse_game(moves, end, db, fen, fenEnd, fixed, ofs, result);
+            parse_game(moves, end, db, fen, fenEnd, fixed, ofs, chess960, result);
             gameCnt++;
             result = GameResult::Unknown;
             ofs = (data - (char*)baseAddress); // Beginning of next game
@@ -344,7 +373,7 @@ void parse_pgn(void* baseAddress, uint64_t size, PGNStats& stats, std::ofstream&
     // trigger: no newline at EOF, missing result, missing closing brace, etc.
     if (state != ToStep[HEADER] && state != ToStep[SKIP_GAME] && end - moves)
     {
-        parse_game(moves, end, db, fen, fenEnd, fixed, ofs, result);
+        parse_game(moves, end, db, fen, fenEnd, fixed, ofs, chess960, result);
         gameCnt++;
     }
 
@@ -364,7 +393,7 @@ const char* play_game(const Position& pos, Move move, const char* cur, const cha
     p.do_move(move, st, pos.gives_check(move));
     while (*cur++) {} // Move to next move in game
     return cur < end ? parse_game<true>(cur, end, ofs, p.fen().c_str(),
-                                        nullptr, fixed, 0, GameResult::Unknown) : cur;
+                                        nullptr, fixed, 0, p.is_chess960(), GameResult::Unknown) : cur;
 }
 
 namespace Parser {
@@ -560,6 +589,11 @@ void make_db(std::istringstream& is) {
     dbName += ".scout";
     std::ofstream db;
     db.open(dbName, std::ofstream::out | std::ofstream::binary);
+
+    // write the version number at the beginning of the file in big endian
+    uint64_t version;
+    uint64_t *version_ptr = (uint64_t *)write_be(SCOUT_FILE_VERSION, (uint8_t *)&version);
+    db.write((const char *)&version, sizeof(SCOUT_FILE_VERSION));
 
     std::cerr << "\nProcessing...";
 

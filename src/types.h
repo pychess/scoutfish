@@ -97,6 +97,8 @@ const bool Is64Bit = true;
 const bool Is64Bit = false;
 #endif
 
+const uint64_t SCOUT_FILE_VERSION = 0x0101; // version 1.1
+
 typedef uint64_t Key;
 typedef uint64_t Bitboard;
 
