@@ -590,8 +590,10 @@ void make_db(std::istringstream& is) {
     std::ofstream db;
     db.open(dbName, std::ofstream::out | std::ofstream::binary);
 
-    // write the version number at the beginning of the file
-    db.write((const char *)&SCOUT_FILE_VERSION, sizeof(SCOUT_FILE_VERSION));
+    // write the version number at the beginning of the file in big endian
+    uint64_t version;
+    uint64_t *version_ptr = (uint64_t *)write_be(SCOUT_FILE_VERSION, (uint8_t *)&version);
+    db.write((const char *)&version, sizeof(SCOUT_FILE_VERSION));
 
     std::cerr << "\nProcessing...";
 
