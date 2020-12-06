@@ -331,8 +331,8 @@ void print_results(const Search::LimitsType& limits) {
   TimePoint elapsed = now() - limits.startTime + 1;
   Scout::Data d = Threads.main()->scout;
   size_t cnt = 0, matches = 0;
-
-  mem_unmap(d.baseAddress, d.dbMapping);
+  
+  mem_unmap((void *)((uint64_t *)d.baseAddress - 1), d.dbMapping);
 
   for (Thread* th : Threads)
   {

@@ -539,7 +539,8 @@ Position& Position::set(const string& fenStr, bool isChess960, StateInfo* si, Th
   return *this;
 }
 
-uint16_t Position::lookup_pos(std::string fen) {
+const uint16_t Position::chess960_std_pos_idx = 518;
+uint16_t Position::lookup_chess960_pos(std::string fen) {
     std::string black_position = fen.substr(0, 8);
     for (uint16_t i = 0; i < 960; ++i) {
         if (black_position == blackPositionTable[i]) {
@@ -547,7 +548,7 @@ uint16_t Position::lookup_pos(std::string fen) {
         }
     }
 
-    return 518; // standard position's index
+    return chess960_std_pos_idx; // standard position's index
 }
 
 std::string Position::lookup_white960_idx(uint16_t idx) {
@@ -555,7 +556,7 @@ std::string Position::lookup_white960_idx(uint16_t idx) {
     {
         return whitePositionTable[idx];
     }
-    return whitePositionTable[518]; // standard position
+    return whitePositionTable[chess960_std_pos_idx]; // standard position
 }
 
 std::string Position::lookup_black960_idx(uint16_t idx) {
@@ -563,7 +564,7 @@ std::string Position::lookup_black960_idx(uint16_t idx) {
     {
         return blackPositionTable[idx];
     }
-    return blackPositionTable[518]; // standard position
+    return blackPositionTable[chess960_std_pos_idx]; // standard position
 }
 
 

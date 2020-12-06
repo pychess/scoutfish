@@ -116,7 +116,7 @@ const char* parse_game(const char* moves, const char* end, std::ofstream& db,
     *curMove++ = make_move(SQ_A1, Square(chess960));
 
     // Write chess960 position value or standard position index as a special move
-    *curMove++ = Move(strlen(fen) > 0 ? Position::lookup_pos(fen) : Position::chess960_std_pos_idx);
+    *curMove++ = Move(strlen(fen) > 0 ? Position::lookup_chess960_pos(fen) : Position::chess960_std_pos_idx);
 
     // Write result as a special move where the 'to' square stores the result
     *curMove++ = make_move(SQ_A1, Square(result));
@@ -589,6 +589,9 @@ void make_db(std::istringstream& is) {
     dbName += ".scout";
     std::ofstream db;
     db.open(dbName, std::ofstream::out | std::ofstream::binary);
+
+    // write the version number at the beginning of the file
+    db.write((const char *)&SCOUT_FILE_VERSION, sizeof(SCOUT_FILE_VERSION));
 
     std::cerr << "\nProcessing...";
 
